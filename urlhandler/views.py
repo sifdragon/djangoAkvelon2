@@ -20,10 +20,6 @@ def dashboard(request):
     return render(request, 'dashboard.html', {'urls': urls})
 
 
-def randomgen():
-    return ''.join(random.choice(string.ascii_lowercase) for _ in range(6))
-
-
 @login_required(login_url='/login/')
 def generate(request):
     if request.method == "POST":
@@ -60,7 +56,6 @@ def home(request, query=None):
     else:
         try:
             check = shorturl.objects.get(short_query=query)
-            check.visits = check.visits + 1
             check.save()
             url_to_redirect = check.original_url
             return redirect(url_to_redirect)
